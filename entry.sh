@@ -3,8 +3,12 @@
 set -m
 
 mkdir -p "$MOUNTPOINT"
-
+if [$SERVER == ""]; then
+rpcbind -f & echo "docker NFS client with rpcbind ENABLED... if you wish to mount the mountpoint in this container USE THE FOLLOWING SYNTAX instead:
+$ docker run -itd --privileged=true --net=host -v vol:/mnt/nfs-1:shared -e SERVER= X.X.X.X -e SHARE=shared_path d3fk/nfs-client" & more
+else
 rpcbind -f &
 mount -t "$FSTYPE" -o "$MOUNT_OPTIONS" "$SERVER:$SHARE" "$MOUNTPOINT"
+fi
 mount | grep nfs
 fg
