@@ -1,58 +1,86 @@
-# docker-nfs-client
+# A small docker nfs client with nfs3. Perfect for enabling your RancherOS to nfs3. 
 
-Docker image for a light NFS client (~10.9MB). By default NFS 4 is used.
+This is a Docker image for a light NFS client (~10MB). By default NFS 3 is used (but the ENV enable you to change this).
 
-Based on https://github.com/evq/nfs-client.
+## Docker image
+
+image name **d3fk/nfs-client**
+
+`docker pull d3fk/nfs-client`
+
+Docker hub repository: https://hub.docker.com/r/d3fk/nfs-client/
+
+
+## Origin
+Based on https://github.com/flaccid/docker-nfs-client
+
+*Default NFS type modified to NFS3 for local IT requirements. 
+The entry script was adapted to permit running the container without setting the SERVER and SHARE env parameters, simply to share on the host's network the NFS client capabilities for mounting any NFS shared path on the host (quite useful with RancherOS ) * 
+
+## ENVIRONMENT
+
+- `SERVER` - the hostname or IP of the NFS server to connect to
+- `SHARE` - the NFS shared path to mount
+- `MOUNT_OPTIONS` - mount options to mount the NFS share with
+- `FSTYPE` - the filesystem type; specify `nfs4` for NFSv4, default is `nfs3`
+- `MOUNTPOINT` - the mount point for the NFS share within the container (default is /mnt/nfs-1)
 
 ## Usage
 
-### Build
+Several possibilities:
+### 1. Mount your nfs mount-point **manually** on your host
 
-    $ docker build -t nfs-client .
+Run the container
 
-### Run
+`docker run -itd --privileged=true --net=host d3fk/nfs-client`
 
-Basic example, mounting NFS within container:
+then you can use nfs to mount all your mountpoints on your host
 
-    $ docker run -it --privileged=true --net=host -v /mnt/nfs-1 -e SERVER=192.168.0.9 -e SHARE=movies nfs-client
+`sudo mount -t nfs SERVER_IP:/shared_path /mount_point`
 
-Writing back to the host:
+### 2. Mount the mount-point **into** the nfs-client container
 
-    $ docker run -itd \
-        --privileged=true \
-        --net=host \
-        --name nfs-movies \
-        -v /media/nfs-movies:/mnt/nfs-1:shared \
-        -e SERVER=192.168.0.9 \
-        -e SHARE=movies \
-          nfs-client
+Basic command
+`docker run -itd --privileged=true --net=host  -e SERVER=nfs_server_ip -e SHARE=shared_path d3fk/nfs-client`
 
-Take note of the historic 'NFS shares and volumes don't mix' ([#4213](https://github.com/docker/docker/issues/4213)) to use `shared` or `rshared` as needed when needing to use `--volumes-from` with other containers. Additionally, after the container is killed you'll need to unmount the host mount too.
+**It is more convenient to set a volume **
 
-#### Runtime Environment Variables
+Simply add a volume if you need to share the volume with other containers or mount it directly on your host (take care to add the **:shared** mention on the volume option)
+`docker run -itd --privileged=true --name nfs --net=host -v /mnt/shared_nfs:/mnt/nfs-1:shared -e SERVER=nfs_server_ip -e SHARE=shared_path d3fk/nfs-client`
 
-There should be a reasonable amount of flexibility using the available variables. If not please raise an issue so your use case can be covered!
+Then, using the `--volume-from nfs` option when runing another container will also made available the nfs shared content in this new container   
+*Alternatively if you are not using a "named volume" but a "shared volume" you could also directly mount the host's directory that mounts the nfs in the new container*
 
-- `SERVER` - the hostname of the NFS server to connect to
-- `SHARE` - the name of the NFS share to mount
-- `MOUNT_OPTIONS` - mount options to mount the NFS share with
-- `FSTYPE` - the filesystem type; specify `nfs3` for NFSv3, default is `nfs` i.e. NFSv4
-- `MOUNTPOINT` - the mount point for the NFS share within the container
 
-### Tag and Push
 
-    $ docker tag -f nfs-client flaccid/nfs-client
-    $ docker push flaccid/nfs-client
+### 3.  For RancherOS users it is possible to run this nfs-client container **at RancherOS startup** 
 
-License and Authors
+by adding the nfs service to one of your cloud-config.yml, user-config.yml or enabled service.yml... 
+i.e: see the file [rancheros-cloud-config.yml](https://github.com/Angatar/docker-nfs-client/blob/master/rancheros-cloud-config.yml)
+
+
+You could also use the [additional mount syntax](https://docs.rancher.com/os/storage/additional-mounts/) addapted to nfs (since you now have a nfs-client started at os startup). 
+ie:
+
+```
+#cloud-config
+        mounts:
+             - ["SERVER_IP:/shared_path", "/mnt/nfs-1", "nfs", ""]
+```
+
+
+
+
+
+License
 -------------------
-- Author: Chris Fordham (<chris@fordham-nagy.id.au>)
 
 ```text
 The MIT License (MIT)
 
 Copyright (c) 2015 Evey Quirk
 Copyright (c) 2015 Chris Fordham
+Copyright (c) 2016 d3fk
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
