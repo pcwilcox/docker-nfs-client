@@ -1,4 +1,4 @@
-# A small docker nfs client with nfs3. Perfect for enabling your RancherOS to nfs3. 
+# A small docker nfs client. Perfect for enabling your RancherOS or whatever to nfs. 
 
 This is a Docker image for a light NFS client (~10MB). By default NFS 3 is used (but the ENV enable you to change this).
 
