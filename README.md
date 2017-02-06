@@ -1,4 +1,4 @@
-# A small docker nfs client. Perfect for enabling your RancherOS or whatever to nfs. 
+# A small docker NFS client. Perfect for enabling your RancherOS or whatever to NFS. 
 
 This is a Docker image for a light NFS client (~10MB). By default NFS 3 is used (but the ENV enable you to change this).
 
@@ -28,13 +28,13 @@ The entry script was adapted to permit running the container without setting the
 ## Usage
 
 Several possibilities:
-### 1. Mount your nfs mount-point **manually** on your host
+### 1. Mount your NFS mount-point **manually** on your host
 
 Run the container
 
 `docker run -itd --privileged=true --net=host d3fk/nfs-client`
 
-then you can use nfs to mount all your mountpoints on your host
+then you can use NFS to mount all your mountpoints on your host
 
 `sudo mount -t nfs SERVER_IP:/shared_path /mount_point`
 
@@ -60,7 +60,7 @@ by adding the nfs service to one of your cloud-config.yml, user-config.yml or en
 i.e: see the file [rancheros-cloud-config.yml](https://github.com/Angatar/docker-nfs-client/blob/master/rancheros-cloud-config.yml)
 
 
-You could also use the [additional mount syntax](https://docs.rancher.com/os/storage/additional-mounts/) addapted to nfs (since you now have a nfs-client started at os startup). 
+You could also use the [additional mount syntax](https://docs.rancher.com/os/storage/additional-mounts/) addapted to NFS (since you now have a nfs-client started at os startup). 
 ie:
 
 ```
