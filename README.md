@@ -1,6 +1,6 @@
-# A small docker NFS client. Perfect for enabling your RancherOS or whatever to NFS. 
+# A small docker NFS client. Perfect for enabling whatever to NFS, compatible with databases. 
 
-This is a Docker image for a light NFS client (~10MB). By default NFS 3 is used (but the ENV enable you to change this).
+This is a Docker image for a light NFS client (~10MB) compatible with database usage. By default NFS 3 is used (but the ENV enable you to change this).
 
 ## Docker image
 
@@ -15,7 +15,7 @@ Docker hub repository: https://hub.docker.com/r/d3fk/nfs-client/
 Based on https://github.com/flaccid/docker-nfs-client
 
 *Default NFS type modified to NFS3 for local IT requirements. 
-The entry script was adapted to permit running the container without setting the SERVER and SHARE env parameters, simply to share on the host's network the NFS client capabilities for mounting any NFS shared path on the host (quite useful with RancherOS ) * 
+The entry script was adapted to be compatible with using this NFS client with database (mariadb, mysql...) and to permit running the container without setting the SERVER and SHARE env parameters, simply to share on the host's network the NFS client capabilities for mounting any NFS shared path on the host (quite useful with small os) * 
 
 ## ENVIRONMENT
 
