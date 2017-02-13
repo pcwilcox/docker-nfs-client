@@ -16,7 +16,7 @@ Based on https://github.com/flaccid/docker-nfs-client
 
 *The image is now built from the original Alpine with automated build.
 Default NFS type modified to NFS3 for local IT requirements. 
-The entry script was adapted to be compatible with using this NFS client with database (mariadb, mysql...) and to permit running the container without setting the SERVER and SHARE env parameters, simply to share on the host's network the NFS client capabilities for mounting any NFS shared path on the host (quite useful with small os) * 
+The entry script was adapted to be compatible with using this NFS client with database (mariadb, mysql...) and to permit running the container without setting the SERVER and SHARE env parameters, simply to share on the host's network the NFS client capabilities for mounting any NFS shared path on the host (quite useful with small os)* 
 
 ## ENVIRONMENT
 
