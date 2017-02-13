@@ -19,7 +19,7 @@ rancher:
         io.rancher.os.scope: system
       net: host
       privileged: true
-#      restart: always
+      restart: always
       volumes:
       - /usr/bin/iptables:/sbin/iptables:ro
       - /mnt/nfs-1:/mnt/nfs-1:shared
