@@ -13,4 +13,4 @@ rpc.statd & rpcbind -f &
 mount -t "$FSTYPE" -o "$MOUNT_OPTIONS" "$SERVER:$SHARE" "$MOUNTPOINT"
 fi
 mount | grep nfs
-fg
+
