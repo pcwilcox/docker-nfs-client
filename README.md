@@ -56,7 +56,7 @@ Then, using the `--volume-from nfs` option when runing another container will al
 
 
 
-### 3.  For RancherOS users it is possible to run this nfs-client container **at RancherOS startup** 
+### 3.  For [RancherOS](https://github.com/rancher/os/) users it is possible to run this nfs-client container **at [RancherOS](https://github.com/rancher/os/) startup** 
 
 by adding the nfs service to one of your cloud-config.yml, user-config.yml or enabled service.yml... 
 
