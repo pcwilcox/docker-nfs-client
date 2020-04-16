@@ -1,4 +1,4 @@
-# A small docker NFS client. Perfect for enabling whatever to NFS, compatible with databases. 
+# A small docker NFS client. Perfect for enabling whatever to NFS, compatible with databases (d3fk/nfs-client). 
 
 This is a Docker image for a light NFS client (~10MB) compatible with database usage. By default NFS 3 is used (but the ENV enable you to change this).
 
@@ -61,7 +61,7 @@ by adding the nfs service to one of your cloud-config.yml, user-config.yml or en
 i.e: see the file [rancheros-cloud-config.yml](https://github.com/Angatar/docker-nfs-client/blob/master/rancheros-cloud-config.yml)
 
 
-You could also use the [additional mount syntax](https://docs.rancher.com/os/storage/additional-mounts/) addapted to NFS (since you now have a nfs-client started at os startup). 
+You could also use the [additional mount syntax](https://rancher.com/docs/os/v1.x/en/storage/additional-mounts/) addapted to NFS (since you now have a nfs-client started at os startup). 
 ie:
 
 ```
